@@ -8,73 +8,103 @@ import officcer.creat.Worker;
 import java.util.Scanner;
 
 public class Management extends AbsAction {
-    Officer[] officers = new Officer[3];
+    int quantity;
+    Officer[] officers;
 
     Scanner sc = new Scanner(System.in);
 
-    @Override
-    public Officer input() {
-        Officer newOfficer = new Officer();
-
-        System.out.println("Enter the name");
-        newOfficer.setName(sc.nextLine());
-
-        System.out.println("Enter the age");
-        newOfficer.setAge(sc.nextLine());
-
-        System.out.println("Enter the gen");
-        newOfficer.setGen(sc.nextLine());
-
-        System.out.println("Enter the address");
-        newOfficer.setAddress(sc.nextLine());
-
-        choiceType();
-
-        return newOfficer;
+    public Management() {
+        officers = new Officer[quantity];
+        quantity = 0;
     }
 
-    public void choiceType() {
+    @Override
+    public Officer input() {
         System.out.println("Enter data type" +
                 "\n1. worker" +
                 "\n2. engineer" +
                 "\n3. staff");
         int choice = Integer.parseInt(sc.nextLine());
-        switch (choice) {
-            case 1 -> inputWorker();
-            case 2 -> inputEngineer();
-            case 3 -> inputStaff();
+        if (choice == 1) {
+            return inputWorker();
+        } else if (choice == 2) {
+            return inputEngineer();
+        } else {
+            return inputStaff();
         }
     }
 
     @Override
-    public void inputWorker() {
+    public Worker inputWorker() {
+        Worker officer = new Worker();
+
+        System.out.println("Enter the name");
+        officer.setName(sc.nextLine());
+
+        System.out.println("Enter the age");
+        officer.setAge(sc.nextLine());
+
+        System.out.println("Enter the gen");
+        officer.setGen(sc.nextLine());
+
+        System.out.println("Enter the address");
+        officer.setAddress(sc.nextLine());
+
         System.out.println("Enter the work");
-        Officer officer = new Worker();
-        ((Worker) officer).setWork(sc.nextLine());
+        officer.setWork(sc.nextLine());
+
+        return officer;
     }
 
     @Override
-    public void inputEngineer() {
-        Officer engineer = new Engineer();
+    public Engineer inputEngineer() {
+        Engineer engineer = new Engineer();
+
+        System.out.println("Enter the name");
+        engineer.setName(sc.nextLine());
+
+        System.out.println("Enter the age");
+        engineer.setAge(sc.nextLine());
+
+        System.out.println("Enter the gen");
+        engineer.setGen(sc.nextLine());
+
+        System.out.println("Enter the address");
+        engineer.setAddress(sc.nextLine());
+
         System.out.println("Enter the train");
-        ((Engineer) engineer).setTrain(sc.nextLine());
+        engineer.setTrain(sc.nextLine());
+
+        return engineer;
     }
 
     @Override
-    public void inputStaff() {
-        Officer staff = new Staff();
+    public Staff inputStaff() {
+        Staff staff = new Staff();
+
+        System.out.println("Enter the name");
+        staff.setName(sc.nextLine());
+
+        System.out.println("Enter the age");
+        staff.setAge(sc.nextLine());
+
+        System.out.println("Enter the gen");
+        staff.setGen(sc.nextLine());
+
+        System.out.println("Enter the address");
+        staff.setAddress(sc.nextLine());
+
         System.out.println("Enter the wage");
-        ((Staff) staff).setWage(sc.nextLine());
+        staff.setWage(sc.nextLine());
+
+        return staff;
     }
 
     @Override
-    public void add(Officer[] e) {
-        for (int i = 0; i < e.length; i++) {
-            if (e[i] == null) {
-                System.out.println("Enter the index " + (i + 1));
-                e[i] = input();
-            }
-        }
+    public void add(Officer e) {
+        officers[quantity] = e;
+        quantity++;
+        show();
     }
 
     @Override
@@ -87,7 +117,7 @@ public class Management extends AbsAction {
                 break;
             }
         }
-        show(e);
+        show();
     }
 
     @Override
@@ -100,7 +130,7 @@ public class Management extends AbsAction {
                 break;
             }
         }
-        show(e);
+        show();
     }
 
     @Override
@@ -120,10 +150,9 @@ public class Management extends AbsAction {
     }
 
     @Override
-    public void show(Officer[] e) {
-        sort(e);
-        for (int i = 0; i < e.length; i++) {
-            System.out.println(e[i]);
+    public void show() {
+        for (int i = 0; i < quantity; i++) {
+            System.out.println(i);
         }
     }
 
@@ -142,12 +171,12 @@ public class Management extends AbsAction {
                     "\nEnter the choice");
             choice = Integer.parseInt(sc.nextLine());
             switch (choice) {
-                case 1 -> add(officers);
+                case 1 -> add(input());
                 case 2 -> edit(officers);
                 case 3 -> delete(officers);
                 case 4 -> sort(officers);
                 case 5 -> find(officers);
-                case 6 -> show(officers);
+                case 6 -> show();
                 case 7 -> System.exit(7);
             }
         } while (choice != 0);

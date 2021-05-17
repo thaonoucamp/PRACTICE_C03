@@ -1,6 +1,9 @@
 package officcer.behavirol;
 
+import officcer.creat.Engineer;
 import officcer.creat.Officer;
+import officcer.creat.Staff;
+import officcer.creat.Worker;
 
 public abstract class AbsAction implements IAction<Officer> {
     @Override
@@ -8,20 +11,20 @@ public abstract class AbsAction implements IAction<Officer> {
         return null;
     }
 
-    public void inputWorker() {
-
+    public Worker inputWorker() {
+        return null;
     }
 
-    public void inputEngineer() {
-
+    public Engineer inputEngineer() {
+        return null;
     }
 
-    public void inputStaff() {
-
+    public Staff inputStaff() {
+        return null;
     }
 
     @Override
-    public void add(Officer[] e) {
+    public void add(Officer e) {
     }
 
     @Override
@@ -45,7 +48,7 @@ public abstract class AbsAction implements IAction<Officer> {
     }
 
     @Override
-    public void show(Officer[] e) {
+    public void show() {
 
     }
 }
