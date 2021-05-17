@@ -136,26 +136,13 @@ public class Management extends AbsAction{
                     "\nEnter the choice");
             choice = Integer.parseInt(sc.nextLine());
             switch (choice) {
-                case 1:
-                    add(officers);
-                    break;
-                case 2:
-                    edit(officers);
-                    break;
-                case 3:
-                    delete(officers);
-                    break;
-                case 4:
-                    sort(officers);
-                    break;
-                case 5:
-                    find(officers);
-                    break;
-                case 6:
-                    show(officers);
-                    break;
-                case 7:
-                    System.exit(7);
+                case 1 -> add(officers);
+                case 2 -> edit(officers);
+                case 3 -> delete(officers);
+                case 4 -> sort(officers);
+                case 5 -> find(officers);
+                case 6 -> show(officers);
+                case 7 -> System.exit(7);
             }
         } while (choice != 0);
     }
