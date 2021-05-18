@@ -8,14 +8,14 @@ import officcer.creat.Worker;
 import java.util.Scanner;
 
 public class Management extends AbsAction {
-    int quantity;
     Officer[] officers;
+
+    int code = 1;
 
     Scanner sc = new Scanner(System.in);
 
     public Management() {
-        officers = new Officer[quantity];
-        quantity = 0;
+        officers = new Officer[3];
     }
 
     @Override
@@ -37,6 +37,9 @@ public class Management extends AbsAction {
     @Override
     public Worker inputWorker() {
         Worker officer = new Worker();
+
+        officer.setId(code);
+        code++;
 
         System.out.println("Enter the name");
         officer.setName(sc.nextLine());
@@ -60,6 +63,9 @@ public class Management extends AbsAction {
     public Engineer inputEngineer() {
         Engineer engineer = new Engineer();
 
+        engineer.setId(code);
+        code++;
+
         System.out.println("Enter the name");
         engineer.setName(sc.nextLine());
 
@@ -82,6 +88,9 @@ public class Management extends AbsAction {
     public Staff inputStaff() {
         Staff staff = new Staff();
 
+        staff.setId(code);
+        code++;
+
         System.out.println("Enter the name");
         staff.setName(sc.nextLine());
 
@@ -101,10 +110,14 @@ public class Management extends AbsAction {
     }
 
     @Override
-    public void add(Officer e) {
-        officers[quantity] = e;
-        quantity++;
-        show();
+    public void add(Officer[] e) {
+        for (int i = 0; i < e.length; i++) {
+            System.out.println("Enter the index " + (i + 1));
+            if (e[i] == null){
+                e[i] = input();
+            }
+        }
+        show(e);
     }
 
     @Override
@@ -117,32 +130,35 @@ public class Management extends AbsAction {
                 break;
             }
         }
-        show();
+        show(e);
     }
 
     @Override
     public void delete(Officer[] e) {
-        System.out.println("Enter the name want to delete");
-        String type = sc.nextLine();
+        int index = find(e);
         for (int i = 0; i < e.length; i++) {
-            if (e[i].getName().equals(type)) {
-                e[i] = null;
-                break;
+            if (i == index) {
+                if (index == e.length - 1) {
+                    e[e.length - 1] = null;
+                    break;
+                }
+                i = i + 1;
             }
         }
-        show();
+        show(e);
     }
 
     @Override
-    public void find(Officer[] e) {
+    public int find(Officer[] e) {
         System.out.println("Enter the name want to find");
         String type = sc.nextLine();
         for (int i = 0; i < e.length; i++) {
             if (e[i].getName().equals(type)) {
-                System.out.println(e[i]);
-                break;
+                System.out.println(e[i] + "index " + i);
+                return i;
             }
         }
+        return 0;
     }
 
     @Override
@@ -150,9 +166,9 @@ public class Management extends AbsAction {
     }
 
     @Override
-    public void show() {
-        for (int i = 0; i < quantity; i++) {
-            System.out.println(i);
+    public void show(Officer[] e) {
+        for (int i = 0; i < e.length; i++) {
+            System.out.println(e[i]);
         }
     }
 
@@ -171,12 +187,12 @@ public class Management extends AbsAction {
                     "\nEnter the choice");
             choice = Integer.parseInt(sc.nextLine());
             switch (choice) {
-                case 1 -> add(input());
+                case 1 -> add(officers);
                 case 2 -> edit(officers);
                 case 3 -> delete(officers);
                 case 4 -> sort(officers);
                 case 5 -> find(officers);
-                case 6 -> show();
+                case 6 -> show(officers);
                 case 7 -> System.exit(7);
             }
         } while (choice != 0);

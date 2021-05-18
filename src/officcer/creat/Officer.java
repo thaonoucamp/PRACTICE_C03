@@ -1,12 +1,21 @@
 package officcer.creat;
 
 public class Officer {
+    private int id;
     private String name;
     private String age;
     private String gen;
     private String address;
 
     public Officer() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Officer(String name, String age, String gen, String address) {
@@ -50,7 +59,8 @@ public class Officer {
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
+        return "id='" + id + '\'' +
+                "name='" + name + '\'' +
                 ", age='" + age + '\'' +
                 ", gen='" + gen + '\'' +
                 ", address='" + address + '\'' +

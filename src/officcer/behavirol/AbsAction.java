@@ -24,7 +24,7 @@ public abstract class AbsAction implements IAction<Officer> {
     }
 
     @Override
-    public void add(Officer e) {
+    public void add(Officer[] e) {
     }
 
     @Override
@@ -38,8 +38,8 @@ public abstract class AbsAction implements IAction<Officer> {
     }
 
     @Override
-    public void find(Officer[] e) {
-
+    public int find(Officer[] e) {
+        return 0;
     }
 
     @Override
@@ -48,7 +48,7 @@ public abstract class AbsAction implements IAction<Officer> {
     }
 
     @Override
-    public void show() {
+    public void show(Officer[] e) {
 
     }
 }
