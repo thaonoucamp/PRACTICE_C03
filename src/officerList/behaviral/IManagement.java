@@ -13,7 +13,11 @@ public interface IManagement<E> {
 
     void delete(List<E> list, int index);
 
-    void find(List<E> list);
+    int sort(List<E> list);
+
+    int findIndex(List<E> list);
+
+    int findBinaryTree(List<E> list, int left, int right, int index);
 
     void show(List<E> list);
 

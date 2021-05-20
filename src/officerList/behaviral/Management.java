@@ -5,9 +5,7 @@ import officerList.creat.Officer;
 import officerList.creat.Staff;
 import officerList.creat.Worker;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Management implements IManagement<Officer> {
     Scanner sc = new Scanner(System.in);
@@ -115,6 +113,7 @@ public class Management implements IManagement<Officer> {
 
     @Override
     public int checkIndex(List<Officer> list) {
+        sort(list);
         System.out.println("Enter the name");
         String name = sc.nextLine();
 
@@ -141,23 +140,61 @@ public class Management implements IManagement<Officer> {
     public void delete(List<Officer> list, int index) {
         index = checkIndex(list);
         for (int i = 0; i < list.size(); i++) {
-            list.remove(index);
+            list.remove(i);
             break;
         }
         show(list);
     }
 
     @Override
-    public void find(List<Officer> list) {
+    public int sort(List<Officer> list) {
+        Collections.sort(list, new Comparator<Officer>() {
+            @Override
+            public int compare(Officer o1, Officer o2) {
+                if (o1.getName().compareTo(o2.getName()) > 0) {
+                    return 1;
+                } else if (o1.getName().compareTo(o2.getName()) < 0) {
+                    return -1;
+                } else if ((o1.getAge().compareTo(o2.getAge())) > 0) {
+                    return 1;
+                } else if ((o1.getAge().compareTo(o2.getAge()) < 0)) {
+                    return -1;
+                } else
+                    return 0;
+            }
+        });
+        return 0;
+    }
+
+    @Override
+    public int findIndex(List<Officer> list) {
         System.out.println("Enter the name");
         String name = sc.nextLine();
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).equals(name)) {
-                System.out.println(list.get(i));
-                break;
+                return i;
             }
         }
+        return -1;
+    }
+
+    @Override
+    public int findBinaryTree(List<Officer> list, int left, int right, int index) {
+        sort(list);
+        left = 0;
+        right = list.size() - 1;
+        int mid = (left + right) / 2;
+        index = findIndex(list);
+
+        if (mid == index) {
+            return mid;
+        }
+
+        if (mid > index) {
+            return findBinaryTree(list, mid + 1, right, index);
+        }
+        return findBinaryTree(list, left, mid - 1, index);
     }
 
     @Override
@@ -177,8 +214,9 @@ public class Management implements IManagement<Officer> {
                     "\n1 -> add" +
                     "\n2 -> edit" +
                     "\n3 -> delete" +
-                    "\n4 -> find" +
-                    "\n5 -> exit" +
+                    "\n4 -> find index" +
+                    "\n5 -> find binary" +
+                    "\n6 -> exit" +
                     "\n--> choice ?"
             );
             choice = Integer.parseInt(sc.nextLine());
@@ -186,7 +224,9 @@ public class Management implements IManagement<Officer> {
                 case 1 -> add(input());
                 case 2 -> edit(listOfficers, checkIndex(listOfficers));
                 case 3 -> delete(listOfficers, checkIndex(listOfficers));
-                case 4 -> find(listOfficers);
+                case 4 -> findIndex(listOfficers);
+//                case 5 -> findBinaryTree(listOfficers, );
+                case 6 -> System.exit(6);
             }
         } while (choice != 0);
     }
