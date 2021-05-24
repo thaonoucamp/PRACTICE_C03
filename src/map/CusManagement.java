@@ -39,6 +39,20 @@ public class CusManagement implements IManagement<String, Customer> {
 
     @Override
     public void add(String key, Customer value) {
+    }
+
+    @Override
+    public void edit(Map<String, Customer> map) {
+
+    }
+
+    @Override
+    public void delete(Map<String, Customer> map) {
+
+    }
+
+    @Override
+    public void find(Map<String, Customer> map) {
 
     }
 
@@ -55,35 +69,59 @@ public class CusManagement implements IManagement<String, Customer> {
         show();
     }
 
-    @Override
-    public void edit(Map<String, Customer> map) {
-        for (int i = 0; i < map.size(); i++) {
-            System.out.println("Enter the key want to edit ");
-            String key = sc.nextLine();
-            if (map.get(key).equals(key)) {
-                this.map.replace(key, input());
+    public void edit() {
+        System.out.println("Enter the key want to edit ");
+        String key = sc.nextLine();
+        for (Map.Entry<String, Customer> entry : map.entrySet()) {
+            if (entry.getKey().equals(key)) {
+                entry.setValue(input());
                 break;
             }
         }
         show();
     }
 
-    @Override
-    public void delete(Map<String, Customer> map) {
-        for (int i = 0; i < map.size(); i++) {
-            System.out.println("Enter the key want to delete ");
-            String key = sc.nextLine();
-            if (map.get(key).equals(key)) {
-                this.map.remove(key);
+    public void delete() {
+        System.out.println("Enter the key want to delete ");
+        String key = sc.nextLine();
+        for (Map.Entry<String, Customer> entry : map.entrySet()) {
+            if (entry.getKey().equals(key)) {
+                map.remove(key);
                 break;
             }
         }
         show();
     }
 
-    @Override
-    public void find(Map<String, Customer> map) {
+    public void find() {
+        System.out.println("Enter the key want to find ");
+        String key = sc.nextLine();
+        for (Map.Entry<String, Customer> entry : map.entrySet()) {
+            if (entry.getKey().equals(key)) {
+                System.out.println(entry.getKey() + entry.getValue());
+                break;
+            }
+        }
+    }
 
+    public void sort() {
+        List<Map.Entry<String, Customer>> list = new LinkedList<>(map.entrySet());
+        Object customer = map.entrySet();
+        Collections.sort(list, new Comparator<Map.Entry<String, Customer>>() {
+            @Override
+            public int compare(Map.Entry<String, Customer> o1, Map.Entry<String, Customer> o2) {
+                if (o1.getValue().getCusName().compareTo(o2.getValue().getCusName()) > 0) {
+                    return 1;
+                } else if (o1.getValue().getCusName().compareTo(o2.getValue().getCusName()) < 0) {
+                    return -1;
+                } else if (o1.getValue().getCusAge().compareTo(o2.getValue().getCusAge()) > 0) {
+                    return 1;
+                } else if (o1.getValue().getCusAge().compareTo(o2.getValue().getCusAge()) < 0) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
     }
 
     @Override
@@ -92,7 +130,6 @@ public class CusManagement implements IManagement<String, Customer> {
                 this.map.entrySet()) {
             System.out.println(entry);
         }
-        System.out.println("----------");
 //        Set<String> keys = map.keySet();
 //        for (String key : keys) {
 //            System.out.println(map.get(key));
@@ -114,9 +151,9 @@ public class CusManagement implements IManagement<String, Customer> {
             choice = Integer.parseInt(sc.nextLine());
             switch (choice) {
                 case 1 -> add();
-                case 2 -> edit(this.map);
-                case 3 -> delete(this.map);
-                case 4 -> find(this.map);
+                case 2 -> edit();
+                case 3 -> delete();
+                case 4 -> find();
                 case 5 -> show();
                 case 6 -> System.exit(6);
             }

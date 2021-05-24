@@ -8,8 +8,6 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-
-//        Scanner sc = new Scanner(System.in);
         CusManagement cusManagement = new CusManagement();
         cusManagement.menu();
 //        cusManagement.add("5", new Customer("a", "1", "1", "hn", "089"));
