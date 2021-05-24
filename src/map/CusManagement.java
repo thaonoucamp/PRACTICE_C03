@@ -122,12 +122,18 @@ public class CusManagement implements IManagement<String, Customer> {
                 return 0;
             }
         });
+        Map<String, Customer> cusList = new LinkedHashMap<>();
+        for (Map.Entry<String, Customer> entry : list) {
+            cusList.put(entry.getKey(), entry.getValue());
+        }
+        map = cusList;
+        show();
     }
 
     @Override
     public void show() {
         for (Map.Entry<String, Customer> entry :
-                this.map.entrySet()) {
+                map.entrySet()) {
             System.out.println(entry);
         }
 //        Set<String> keys = map.keySet();
@@ -146,7 +152,8 @@ public class CusManagement implements IManagement<String, Customer> {
                     "\n2 -> edit" +
                     "\n3 -> delete" +
                     "\n4 -> find" +
-                    "\n5 -> exit" +
+                    "\n5 -> sorted" +
+                    "\n6 -> exit" +
                     "\n---> choice ?");
             choice = Integer.parseInt(sc.nextLine());
             switch (choice) {
@@ -154,7 +161,7 @@ public class CusManagement implements IManagement<String, Customer> {
                 case 2 -> edit();
                 case 3 -> delete();
                 case 4 -> find();
-                case 5 -> show();
+                case 5 -> sort();
                 case 6 -> System.exit(6);
             }
         } while (choice != 0);
