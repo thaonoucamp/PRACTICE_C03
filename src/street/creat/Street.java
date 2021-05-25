@@ -2,7 +2,7 @@ package street.creat;
 
 import java.util.List;
 
-public class Street {
+public class Street extends Family{
     private int quantityFamily;
     private List<Family> families;
 

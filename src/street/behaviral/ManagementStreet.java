@@ -4,19 +4,15 @@ import street.creat.Family;
 import street.creat.Person;
 import street.creat.Street;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ManagementStreet {
     transient Scanner sc = new Scanner(System.in);
 
-    private List<Family> listStreet;
-    private List<Person> listFamily;
+    private List<Person> listStreet;
 
     public ManagementStreet() {
         listStreet = new ArrayList<>();
-        listFamily = new ArrayList<>();
     }
 
     public Person input() {
@@ -37,34 +33,40 @@ public class ManagementStreet {
         return person;
     }
 
-    public void add() {
-        Family family = new Family();
-        Street street = new Street();
-        System.out.println("Enter quantity family of the street");
-        street.setQuantityFamily(Integer.parseInt(sc.nextLine()));
+    public Family addMembers() {
+        List<Person> people = new ArrayList<>();
 
-        for (int i = 0; i < street.getQuantityFamily(); i++) {
-            System.out.println("Enter information family at index " + (i + 1));
-            System.out.println("Enter quantity members of the family");
-            family.setQuantityMember(Integer.parseInt(sc.nextLine()));
-            for (int j = 0; j < family.getQuantityMember(); j++) {
-                System.out.println("Enter the id home");
-                family.setIdHome(Integer.parseInt(sc.nextLine()));
-                System.out.println("Enter information member at index " + (i + 1));
-                listFamily.add(input());
-            }
+        System.out.println("Enter the id home");
+        int id = Integer.parseInt(sc.nextLine());
+
+        System.out.println("Enter quantity members of members");
+        int quantity = Integer.parseInt(sc.nextLine());
+
+        for (int i = 0; i < quantity; i++) {
+            System.out.println("Enter the member at index " + (i + 1));
+            people.add(input());
         }
-        show();
+
+        Family family = new Family(quantity, id, people);
+
+        return family;
+    }
+
+    public void addFamilies() {
+        System.out.println("Enter quantity family of street");
+        int quantity = Integer.parseInt(sc.nextLine());
+
+        for (int i = 0; i < quantity; i++) {
+            System.out.println("Enter the family at index " + (i + 1));
+            listStreet.add(addMembers());
+        }
     }
 
     public void show() {
-        for (int i = 0; i < listStreet.size(); i++) {
-            for (int j = 0; j < listFamily.size(); j++) {
-                System.out.println(listFamily.get(i));
-//                System.out.println(listFamily.);
-            }
+        Iterator iterator = listStreet.iterator();
+        while (iterator.hasNext()) {
+            Object person = iterator.next();
+            System.out.println(person);
         }
     }
-
-
 }

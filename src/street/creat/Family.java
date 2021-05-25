@@ -2,7 +2,7 @@ package street.creat;
 
 import java.util.List;
 
-public class Family {
+public class Family extends Person{
     private int quantityMember;
     private int idHome;
     private List<Person> members;
