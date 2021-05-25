@@ -2,7 +2,7 @@ package street.creat;
 
 public class Person {
     private String name;
-    private String id;
+    private int id;
     private int age;
     private String job;
 
@@ -14,11 +14,11 @@ public class Person {
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -38,7 +38,7 @@ public class Person {
         this.job = job;
     }
 
-    public Person(String name, String id, int age, String job) {
+    public Person(String name, int id, int age, String job) {
         this.name = name;
         this.id = id;
         this.age = age;
