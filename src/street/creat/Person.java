@@ -2,6 +2,24 @@ package street.creat;
 
 public class Person {
     private String name;
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Person(String name, String gender, int id, int age, String job) {
+        this.name = name;
+        this.gender = gender;
+        this.id = id;
+        this.age = age;
+        this.job = job;
+    }
+
+    private String gender;
     private int id;
     private int age;
     private String job;
@@ -38,23 +56,18 @@ public class Person {
         this.job = job;
     }
 
-    public Person(String name, int id, int age, String job) {
-        this.name = name;
-        this.id = id;
-        this.age = age;
-        this.job = job;
-    }
-
     public Person() {
     }
 
     @Override
     public String toString() {
         return "Person{" +
-                "name='" + name + '\'' +
                 ", id='" + id + '\'' +
+                "name='" + name + '\'' +
+                "gender='" + gender + '\'' +
                 ", age=" + age +
                 ", job='" + job + '\'' +
+                "\n" +
                 '}';
     }
 }

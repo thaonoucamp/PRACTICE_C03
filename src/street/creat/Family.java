@@ -1,11 +1,12 @@
 package street.creat;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Family extends Person{
+public class Family {
     private int quantityMember;
     private int idHome;
-    private List<Person> members;
+    private List<Person> listMembers;
 
     public int getIdHome() {
         return idHome;
@@ -15,10 +16,10 @@ public class Family extends Person{
         this.idHome = idHome;
     }
 
-    public Family(int quantityMember, int idHome, List<Person> members) {
+    public Family(int quantityMember, int idHome, List<Person> listMembers) {
         this.quantityMember = quantityMember;
         this.idHome = idHome;
-        this.members = members;
+        this.listMembers = listMembers;
     }
 
     public Family() {
@@ -32,12 +33,12 @@ public class Family extends Person{
         this.quantityMember = quantityMember;
     }
 
-    public List<Person> getMembers() {
-        return members;
+    public List<Person> getListMembers() {
+        return listMembers;
     }
 
-    public void setMembers(List<Person> members) {
-        this.members = members;
+    public void setListMembers(ArrayList<Person> listMembers) {
+        this.listMembers = listMembers;
     }
 
     @Override
@@ -45,7 +46,7 @@ public class Family extends Person{
         return "Family{" +
                 "quantityMember=" + quantityMember +
                 ", idHome=" + idHome +
-                ", members=" + members +
+                ", members=" + listMembers +
                 '}';
     }
 }

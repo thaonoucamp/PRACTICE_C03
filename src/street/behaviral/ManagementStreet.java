@@ -2,16 +2,15 @@ package street.behaviral;
 
 import street.creat.Family;
 import street.creat.Person;
-import street.creat.Street;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ManagementStreet {
     transient Scanner sc = new Scanner(System.in);
-
-    int idPerson;
-    int idFamily;
-    private List<Person> listStreet;
+    private int idPerson;
+    private int idFamily;
+    private ArrayList<Family> listStreet;
 
     public ManagementStreet() {
         listStreet = new ArrayList<>();
@@ -24,6 +23,9 @@ public class ManagementStreet {
 
         System.out.println("Enter the name");
         person.setName(sc.nextLine());
+
+        System.out.println("Enter the gender");
+        person.setGender(sc.nextLine());
 
         System.out.println("Enter the age");
         person.setAge(Integer.parseInt(sc.nextLine()));
@@ -38,7 +40,7 @@ public class ManagementStreet {
     }
 
     public Family addMembers() {
-        List<Person> people = new ArrayList<>();
+        ArrayList<Person> people = new ArrayList<>();
 
         int id = idFamily;
         idFamily++;
@@ -64,36 +66,104 @@ public class ManagementStreet {
             System.out.println("Enter the family at index " + (i + 1));
             listStreet.add(addMembers());
         }
+        show();
     }
 
     public void findPerson() {
-        System.out.println("Enter the id want to find");
+        System.out.println("Enter the id want to find of person");
         int id = Integer.parseInt(sc.nextLine());
+
         for (int i = 0; i < listStreet.size(); i++) {
-            if (id == listStreet.get(i).getId()) {
+            for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
+                if (id == listStreet.get(i).getListMembers().get(j).getId()) {
+                    System.out.println(listStreet.get(j));
+                    break;
+                }
+            }
+        }
+    }
+
+    public void findByFamily() {
+        System.out.println("Enter the id want to find of family");
+        int id = Integer.parseInt(sc.nextLine());
+
+        for (int i = 0; i < listStreet.size(); i++) {
+            if (id == listStreet.get(i).getIdHome()) {
                 System.out.println(listStreet.get(i));
                 break;
             }
         }
     }
 
-    public void findByFamily() {
-
-    }
-
     public void edit() {
+        System.out.println("Enter the id want to edit of person");
+        int id = Integer.parseInt(sc.nextLine());
 
+        for (int i = 0; i < listStreet.size(); i++) {
+            for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
+                if (id == listStreet.get(i).getListMembers().get(j).getId()) {
+                    listStreet.get(i).getListMembers().set(j, input());
+                    break;
+                }
+            }
+        }
+        show();
     }
 
     public void delete() {
+        System.out.println("Enter the id want to delete of person");
+        int id = Integer.parseInt(sc.nextLine());
 
+        for (int i = 0; i < listStreet.size(); i++) {
+            for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
+                if (id == listStreet.get(i).getListMembers().get(j).getId()) {
+                    listStreet.get(i).getListMembers().remove(j);
+                    break;
+                }
+            }
+        }
+        show();
     }
 
     public void sort() {
+        List<Person> personList = getListPerson();
+        Collections.sort(personList, new Comparator<Person>() {
+            @Override
+            public int compare(Person o1, Person o2) {
+                if (o1.getName().equals(o2.getName())){
+                    return o1.getAge() - o2.getAge();
+                }
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+    }
 
+    public List<Person> getListPerson() {
+        for (int i = 0; i < listStreet.size(); i++) {
+            for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
+                List<Person> listPerson = listStreet.get(i).getListMembers();
+                return listPerson;
+            }
+        }
+        return null;
+    }
+
+    public void insertMember() {
+        System.out.println("Enter the id want to insert of family");
+        int id = Integer.parseInt(sc.nextLine());
+
+        for (int i = 0; i < listStreet.size(); i++) {
+            if (id == listStreet.get(i).getIdHome()) {
+                for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
+                    listStreet.get(i).getListMembers().add(input());
+                    break;
+                }
+            }
+        }
     }
 
     public void show() {
+//        sort();
         Iterator iterator = listStreet.iterator();
         while (iterator.hasNext()) {
             Object person = iterator.next();
@@ -104,25 +174,29 @@ public class ManagementStreet {
     public void menu() {
         int choice;
         do {
-            System.out.println("---------" +
+            System.out.println("------------" +
                     "\n*** Menu ***" +
-                    "\n1 -> add" +
-                    "\n2 -> edit" +
+                    "\n1 -> add family" +
+                    "\n2 -> edit " +
                     "\n3 -> delete" +
-                    "\n4 -> find" +
+                    "\n4 -> find family" +
                     "\n5 -> sort" +
-                    "\n6 -> exit"
+                    "\n6 -> insert member" +
+                    "\n7 -> find member" +
+                    "\n8 -> exit"
             );
-            System.out.println("Enter the choice ?");
+            System.out.println("Enter the choice your?");
             choice = Integer.parseInt(sc.nextLine());
 
             switch (choice) {
                 case 1 -> addFamilies();
                 case 2 -> edit();
                 case 3 -> delete();
-                case 4 -> findPerson();
+                case 4 -> findByFamily();
                 case 5 -> sort();
-                case 6 -> System.exit(6);
+                case 6 -> insertMember();
+                case 7 -> findPerson();
+                case 8 -> System.exit(8);
             }
         } while (choice != 0);
     }
