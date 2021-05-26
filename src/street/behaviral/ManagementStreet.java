@@ -39,6 +39,17 @@ public class ManagementStreet {
         return person;
     }
 
+    public void add() {
+        System.out.println("choice want to add of type" +
+                "\n1 -> add family" +
+                "\n2 -> add member");
+        int choice = Integer.parseInt(sc.nextLine());
+        switch (choice) {
+            case 1 -> addFamilies();
+            case 2 -> insertMember();
+        }
+    }
+
     public Family addMembers() {
         ArrayList<Person> people = new ArrayList<>();
 
@@ -69,7 +80,7 @@ public class ManagementStreet {
         show();
     }
 
-    public void findPerson() {
+    public void findById() {
         System.out.println("Enter the id want to find of person");
         int id = Integer.parseInt(sc.nextLine());
 
@@ -80,6 +91,34 @@ public class ManagementStreet {
                     break;
                 }
             }
+        }
+    }
+
+    public void findByName() {
+        System.out.println("Enter the name want to find of person");
+        String name = sc.nextLine();
+
+        for (int i = 0; i < listStreet.size(); i++) {
+            for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
+                if (listStreet.get(i).getListMembers().get(j).getName().equals(name)) {
+                    System.out.println(listStreet.get(j));
+                    break;
+                }
+            }
+        }
+    }
+
+    public void find() {
+        System.out.println("choice want to find of type" +
+                "\n1 -> find by family" +
+                "\n2 -> find by name" +
+                "\n3 -> find by id"
+        );
+        int choice = Integer.parseInt(sc.nextLine());
+        switch (choice) {
+            case 1 -> findByFamily();
+            case 2 -> findByName();
+            case 3 -> findById();
         }
     }
 
@@ -130,7 +169,7 @@ public class ManagementStreet {
         Collections.sort(personList, new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
-                if (o1.getName().equals(o2.getName())){
+                if (o1.getName().equals(o2.getName())) {
                     return o1.getAge() - o2.getAge();
                 }
                 return o1.getName().compareTo(o2.getName());
@@ -163,7 +202,6 @@ public class ManagementStreet {
     }
 
     public void show() {
-//        sort();
         Iterator iterator = listStreet.iterator();
         while (iterator.hasNext()) {
             Object person = iterator.next();
@@ -176,27 +214,23 @@ public class ManagementStreet {
         do {
             System.out.println("------------" +
                     "\n*** Menu ***" +
-                    "\n1 -> add family" +
+                    "\n1 -> add " +
                     "\n2 -> edit " +
                     "\n3 -> delete" +
-                    "\n4 -> find family" +
+                    "\n4 -> find " +
                     "\n5 -> sort" +
-                    "\n6 -> insert member" +
-                    "\n7 -> find member" +
-                    "\n8 -> exit"
+                    "\n6 -> exit"
             );
             System.out.println("Enter the choice your?");
             choice = Integer.parseInt(sc.nextLine());
 
             switch (choice) {
-                case 1 -> addFamilies();
+                case 1 -> add();
                 case 2 -> edit();
                 case 3 -> delete();
-                case 4 -> findByFamily();
+                case 4 -> find();
                 case 5 -> sort();
-                case 6 -> insertMember();
-                case 7 -> findPerson();
-                case 8 -> System.exit(8);
+                case 6 -> System.exit(6);
             }
         } while (choice != 0);
     }
