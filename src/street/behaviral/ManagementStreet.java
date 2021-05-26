@@ -2,7 +2,9 @@ package street.behaviral;
 
 import street.creat.Family;
 import street.creat.Person;
+import street.myFile.FileText;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,6 +13,7 @@ public class ManagementStreet {
     private int idPerson;
     private int idFamily;
     private ArrayList<Family> listStreet;
+    FileText fileText = new FileText();
 
     public ManagementStreet() {
         listStreet = new ArrayList<>();
@@ -39,7 +42,7 @@ public class ManagementStreet {
         return person;
     }
 
-    public void add() {
+    public void add() throws IOException {
         System.out.println("choice want to add of type" +
                 "\n1 -> add family" +
                 "\n2 -> add member");
@@ -50,7 +53,9 @@ public class ManagementStreet {
         }
     }
 
-    public Family addMembers() {
+    public Family addMembers() throws IOException {
+        fileText.writer(fileText.FILE_PATH);
+
         ArrayList<Person> people = new ArrayList<>();
 
         int id = idFamily;
@@ -69,10 +74,11 @@ public class ManagementStreet {
         return family;
     }
 
-    public void addFamilies() {
+    public void addFamilies() throws IOException {
+        fileText.writer(fileText.FILE_PATH);
+
         System.out.println("Enter quantity family of street");
         int quantity = Integer.parseInt(sc.nextLine());
-
         for (int i = 0; i < quantity; i++) {
             System.out.println("Enter the family at index " + (i + 1));
             listStreet.add(addMembers());
@@ -83,7 +89,6 @@ public class ManagementStreet {
     public void findById() {
         System.out.println("Enter the id want to find of person");
         int id = Integer.parseInt(sc.nextLine());
-
         for (int i = 0; i < listStreet.size(); i++) {
             for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
                 if (id == listStreet.get(i).getListMembers().get(j).getId()) {
@@ -97,7 +102,6 @@ public class ManagementStreet {
     public void findByName() {
         System.out.println("Enter the name want to find of person");
         String name = sc.nextLine();
-
         for (int i = 0; i < listStreet.size(); i++) {
             for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
                 if (listStreet.get(i).getListMembers().get(j).getName().equals(name)) {
@@ -134,7 +138,9 @@ public class ManagementStreet {
         }
     }
 
-    public void edit() {
+    public void edit() throws IOException {
+        fileText.writer(fileText.FILE_PATH);
+
         System.out.println("Enter the id want to edit of person");
         int id = Integer.parseInt(sc.nextLine());
 
@@ -149,7 +155,9 @@ public class ManagementStreet {
         show();
     }
 
-    public void delete() {
+    public void delete() throws IOException {
+        fileText.writer(fileText.FILE_PATH);
+
         System.out.println("Enter the id want to delete of person");
         int id = Integer.parseInt(sc.nextLine());
 
@@ -209,7 +217,7 @@ public class ManagementStreet {
         }
     }
 
-    public void menu() {
+    public void menu() throws IOException {
         int choice;
         do {
             System.out.println("------------" +

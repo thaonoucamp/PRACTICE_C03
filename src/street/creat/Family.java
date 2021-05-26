@@ -1,9 +1,10 @@
 package street.creat;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Family {
+public class Family implements Serializable {
     private int quantityMember;
     private int idHome;
     private List<Person> listMembers;
