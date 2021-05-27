@@ -39,9 +39,12 @@ public class Main {
 
     private static ArrayList<Country> reader() throws IOException {
         ArrayList<Country> list = new ArrayList<>();
+
         FileReader fileReader = new FileReader(new File(FILE_PATH));
         BufferedReader bufferedReader = new BufferedReader(fileReader);
+
         String line = null;
+
         while ((line = bufferedReader.readLine()) != null) {
             String[] item = line.split(",");
             for (int i = 0; i < item.length; i++) {
