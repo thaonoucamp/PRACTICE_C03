@@ -63,13 +63,12 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Members{" +
                 ", id='" + id + '\'' +
-                "name='" + name + '\'' +
-                "gender='" + gender + '\'' +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
                 ", age=" + age +
                 ", job='" + job + '\'' +
-                "\n" +
                 '}';
     }
 }

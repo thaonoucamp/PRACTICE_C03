@@ -12,11 +12,14 @@ public class ManagementStreet {
     transient Scanner sc = new Scanner(System.in);
     private int idPerson;
     private int idFamily;
-    private ArrayList<Family> listStreet;
+    private List<Family> listStreet;
     FileText fileText = new FileText();
 
-    public ManagementStreet() {
-        listStreet = new ArrayList<>();
+    public ManagementStreet() throws IOException, ClassNotFoundException {
+        listStreet =
+//                new ArrayList<>();
+                fileText.reader();
+//                fileText.reader() == null ? new ArrayList<>() : fileText.reader();
         idPerson = 1;
         idFamily = 1;
     }
@@ -42,7 +45,7 @@ public class ManagementStreet {
         return person;
     }
 
-    public void add() throws IOException {
+    public void add() throws IOException, ClassNotFoundException {
         System.out.println("choice want to add of type" +
                 "\n1 -> add family" +
                 "\n2 -> add member");
@@ -53,9 +56,7 @@ public class ManagementStreet {
         }
     }
 
-    public Family addMembers() throws IOException {
-        fileText.writer(fileText.FILE_PATH);
-
+    public Family addMembers() throws IOException, ClassNotFoundException {
         ArrayList<Person> people = new ArrayList<>();
 
         int id = idFamily;
@@ -74,21 +75,22 @@ public class ManagementStreet {
         return family;
     }
 
-    public void addFamilies() throws IOException {
-        fileText.writer(fileText.FILE_PATH);
-
+    public void addFamilies() throws IOException, ClassNotFoundException {
         System.out.println("Enter quantity family of street");
         int quantity = Integer.parseInt(sc.nextLine());
+
         for (int i = 0; i < quantity; i++) {
             System.out.println("Enter the family at index " + (i + 1));
             listStreet.add(addMembers());
         }
+        fileText.writer(listStreet);
         show();
     }
 
     public void findById() {
         System.out.println("Enter the id want to find of person");
         int id = Integer.parseInt(sc.nextLine());
+
         for (int i = 0; i < listStreet.size(); i++) {
             for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
                 if (id == listStreet.get(i).getListMembers().get(j).getId()) {
@@ -102,6 +104,7 @@ public class ManagementStreet {
     public void findByName() {
         System.out.println("Enter the name want to find of person");
         String name = sc.nextLine();
+
         for (int i = 0; i < listStreet.size(); i++) {
             for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
                 if (listStreet.get(i).getListMembers().get(j).getName().equals(name)) {
@@ -138,8 +141,8 @@ public class ManagementStreet {
         }
     }
 
-    public void edit() throws IOException {
-        fileText.writer(fileText.FILE_PATH);
+    public void edit() throws IOException, ClassNotFoundException {
+        fileText.writer(listStreet);
 
         System.out.println("Enter the id want to edit of person");
         int id = Integer.parseInt(sc.nextLine());
@@ -152,11 +155,13 @@ public class ManagementStreet {
                 }
             }
         }
+        fileText.reader();
+
         show();
     }
 
-    public void delete() throws IOException {
-        fileText.writer(fileText.FILE_PATH);
+    public void delete() throws IOException, ClassNotFoundException {
+        fileText.writer(listStreet);
 
         System.out.println("Enter the id want to delete of person");
         int id = Integer.parseInt(sc.nextLine());
@@ -169,10 +174,13 @@ public class ManagementStreet {
                 }
             }
         }
+        fileText.reader();
         show();
     }
 
-    public void sort() {
+    public void sort() throws IOException, ClassNotFoundException {
+        fileText.writer(listStreet);
+
         List<Person> personList = getListPerson();
         Collections.sort(personList, new Comparator<Person>() {
             @Override
@@ -183,6 +191,7 @@ public class ManagementStreet {
                 return o1.getName().compareTo(o2.getName());
             }
         });
+        fileText.reader();
     }
 
     public List<Person> getListPerson() {
@@ -217,7 +226,7 @@ public class ManagementStreet {
         }
     }
 
-    public void menu() throws IOException {
+    public void menu() throws IOException, ClassNotFoundException {
         int choice;
         do {
             System.out.println("------------" +
@@ -227,9 +236,10 @@ public class ManagementStreet {
                     "\n3 -> delete" +
                     "\n4 -> find " +
                     "\n5 -> sort" +
-                    "\n6 -> exit"
+                    "\n6 -> exit" +
+                    "\n------------"
             );
-            System.out.println("Enter the choice your?");
+            System.out.println("Enter the your choice ?");
             choice = Integer.parseInt(sc.nextLine());
 
             switch (choice) {

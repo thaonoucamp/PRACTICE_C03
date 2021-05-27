@@ -45,8 +45,7 @@ public class Family implements Serializable {
     @Override
     public String toString() {
         return "Family{" +
-                "quantityMember=" + quantityMember +
-                ", idHome=" + idHome +
+                " idHome=" + idHome +
                 ", members=" + listMembers +
                 '}';
     }
