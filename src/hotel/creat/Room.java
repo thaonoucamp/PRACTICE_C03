@@ -7,7 +7,7 @@ public class Room {
     private int quantityCusInRoom;
     private ArrayList<Customer> people;
 
-    public Room() {
+    public Room(String s, String s1, int i, ArrayList<Customer> list1) {
     }
 
     public int getIdRoom() {
@@ -56,7 +56,7 @@ public class Room {
     @Override
     public String toString() {
         return "Room{id=" + idRoom +
-                "quantityInRoom=" + quantityCusInRoom +
+                ", quantityInRoom=" + quantityCusInRoom +
                 ", people=" + people +
                 '}';
     }

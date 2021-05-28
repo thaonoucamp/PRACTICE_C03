@@ -1,11 +1,15 @@
 package hotel.structural;
 
+import hotel.behaviral.ManageHotel;
+import student.behaviral.Management;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Show {
-    private String[] account = {"dangiafc", "dangxuanthao"};
+    private static String[] account = {"dangiafc", "dangxuanthao"};
 
-    public boolean login() {
+    public static boolean login() {
         String[] checkAccount = new String[2];
         boolean check = false;
         System.out.println("Login your account");
@@ -31,7 +35,10 @@ public class Show {
         } while (check);
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException {
+        ManageHotel hotel = new ManageHotel();
+        if (login()) {
+            hotel.menu();
+        }
     }
 }

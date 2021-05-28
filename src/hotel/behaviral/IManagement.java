@@ -1,5 +1,6 @@
 package hotel.behaviral;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public interface IManagement<E> {
@@ -11,7 +12,7 @@ public interface IManagement<E> {
 
     void delete(ArrayList<E> list);
 
-    ArrayList<E> add(ArrayList<E> list);
+    void add(ArrayList<E> list) throws IOException;
 
     void find(ArrayList<E> list);
 
@@ -19,5 +20,5 @@ public interface IManagement<E> {
 
     void show(ArrayList<E> list);
 
-    void menu();
+    void menu() throws IOException;
 }

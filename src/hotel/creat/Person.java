@@ -1,9 +1,9 @@
 package hotel.creat;
 
 public class Person {
+    private int id;
     private String name;
     private int age;
-    private int id;
 
     public Person() {
     }
