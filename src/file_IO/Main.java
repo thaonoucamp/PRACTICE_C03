@@ -57,10 +57,10 @@ public class Main {
     private static void writerCSV(List<Country> list) throws IOException {
         File file = new File(FILE_PATH);
         FileWriter fileWriter = new FileWriter(file);
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         for (int i = 0; i < list.size(); i++) {
-            bufferedWriter.write(list.get(i).getId() + "," + list.get(i).getCode() + "," + list.get(i).getName() + "\n");
+            fileWriter.write(list.get(i).toString() + "\n");
+//            fileWriter.write(list.get(i).getId() + "," + list.get(i).getCode() + "," + list.get(i).getName() + "\n");
         }
-        bufferedWriter.close();
+        fileWriter.close();
     }
 }

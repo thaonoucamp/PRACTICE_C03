@@ -1,4 +1,4 @@
-2,TL,Thailand
-3,TQ,China
-4,EL,England
-1,VN,Vietnam
+Country{id=2, code='TL', name='Thailand'}
+Country{id=3, code='TQ', name='China'}
+Country{id=4, code='EL', name='England'}
+Country{id=1, code='VN', name='Vietnam'}
