@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Person implements Serializable {
     private String name;
+    private String gender;
+    private int id;
+    private int age;
+    private String job;
 
     public String getGender() {
         return gender;
@@ -20,11 +24,6 @@ public class Person implements Serializable {
         this.age = age;
         this.job = job;
     }
-
-    private String gender;
-    private int id;
-    private int age;
-    private String job;
 
     public String getName() {
         return name;

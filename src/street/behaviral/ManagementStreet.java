@@ -2,26 +2,29 @@ package street.behaviral;
 
 import street.creat.Family;
 import street.creat.Person;
-import street.myFile.FileText;
+import street.myFile.FileCSV;
+import street.myFile.FileObj;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ManagementStreet {
     transient Scanner sc = new Scanner(System.in);
+
     private int idPerson;
     private int idFamily;
+
     private List<Family> listStreet;
-    FileText fileText = new FileText();
 
     public ManagementStreet() throws IOException, ClassNotFoundException {
-        listStreet =
-//                new ArrayList<>();
-                fileText.reader();
-//                fileText.reader() == null ? new ArrayList<>() : fileText.reader();
-        idPerson = 1;
-        idFamily = 1;
+        try {
+            listStreet = FileCSV.reader(FileCSV.FILE_CSV) == null ? new ArrayList<>() : FileCSV.reader(FileCSV.FILE_CSV);
+        } catch (Exception e) {
+            listStreet = new ArrayList<>();
+        } finally {
+            idPerson = 1;
+            idFamily = 1;
+        }
     }
 
     public Person input() {
@@ -83,7 +86,7 @@ public class ManagementStreet {
             System.out.println("Enter the family at index " + (i + 1));
             listStreet.add(addMembers());
         }
-        fileText.writer(listStreet);
+        FileCSV.writerCSV(FileCSV.FILE_CSV, listStreet);
         show();
     }
 
@@ -142,7 +145,7 @@ public class ManagementStreet {
     }
 
     public void edit() throws IOException, ClassNotFoundException {
-        fileText.writer(listStreet);
+        FileCSV.reader(FileCSV.FILE_CSV);
 
         System.out.println("Enter the id want to edit of person");
         int id = Integer.parseInt(sc.nextLine());
@@ -155,31 +158,32 @@ public class ManagementStreet {
                 }
             }
         }
-        fileText.reader();
-
+        FileCSV.writerCSV(FileCSV.FILE_CSV, listStreet);
         show();
     }
 
     public void delete() throws IOException, ClassNotFoundException {
-        fileText.writer(listStreet);
+        FileCSV.reader(FileCSV.FILE_CSV);
 
         System.out.println("Enter the id want to delete of person");
         int id = Integer.parseInt(sc.nextLine());
 
         for (int i = 0; i < listStreet.size(); i++) {
+//            int quantity = listStreet.get(i).getQuantityMember();
             for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
                 if (id == listStreet.get(i).getListMembers().get(j).getId()) {
                     listStreet.get(i).getListMembers().remove(j);
+//                    quantity--;
                     break;
                 }
             }
         }
-        fileText.reader();
+        FileCSV.writerCSV(FileCSV.FILE_CSV, listStreet);
         show();
     }
 
     public void sort() throws IOException, ClassNotFoundException {
-        fileText.writer(listStreet);
+        FileCSV.reader(FileCSV.FILE_CSV);
 
         List<Person> personList = getListPerson();
         Collections.sort(personList, new Comparator<Person>() {
@@ -191,7 +195,6 @@ public class ManagementStreet {
                 return o1.getName().compareTo(o2.getName());
             }
         });
-        fileText.reader();
     }
 
     public List<Person> getListPerson() {

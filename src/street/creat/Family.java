@@ -46,6 +46,7 @@ public class Family implements Serializable {
     public String toString() {
         return "Family{" +
                 " idHome=" + idHome +
+                " quantity=" + quantityMember +
                 ", members=" + listMembers +
                 '}';
     }

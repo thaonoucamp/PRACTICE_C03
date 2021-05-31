@@ -8,24 +8,26 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileText {
-    public String FILE_PATH = "/Users/thaodangxuan/IdeaProjects/PRACTICE_C03/src/street/myFile/treet.dat";
+public class FileObj {
+    public static String FILE_OBJ = "/Users/thaodangxuan/IdeaProjects/PRACTICE_C03/src/street/myFile/treet.dat";
 
-    public void writer(List<Family> list) throws IOException {
-        File file = new File(FILE_PATH);
+    public static void writer(String path, List<Family> list) throws IOException {
 
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        FileOutputStream fileOutputStream = new FileOutputStream(path);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-        objectOutputStream.writeObject(list);
+        for (int i = 0; i < list.size(); i++) {
+            objectOutputStream.writeObject(list);
+        }
+
         objectOutputStream.flush();
 
         objectOutputStream.close();
         fileOutputStream.close();
     }
 
-    public ArrayList<Family> reader() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream(FILE_PATH);
+    public static ArrayList<Family> reader(String path) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(path);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
         ArrayList list = (ArrayList<Family>) objectInputStream.readObject();

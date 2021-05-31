@@ -1,9 +1,7 @@
 package street.struct;
 
 import street.behaviral.ManagementStreet;
-import street.myFile.FileText;
 
-import java.io.File;
 import java.io.IOException;
 
 public class Main {
