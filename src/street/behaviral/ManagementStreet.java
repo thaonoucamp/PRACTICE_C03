@@ -18,12 +18,9 @@ public class ManagementStreet {
 
     public ManagementStreet() throws IOException, ClassNotFoundException {
         try {
-            listStreet = FileCSV.reader(FileCSV.FILE_CSV) == null ? new ArrayList<>() : FileCSV.reader(FileCSV.FILE_CSV);
+             listStreet = FileCSV.reader(FileCSV.FILE_CSV);
         } catch (Exception e) {
             listStreet = new ArrayList<>();
-        } finally {
-            idPerson = 1;
-            idFamily = 1;
         }
     }
 
@@ -86,7 +83,7 @@ public class ManagementStreet {
             System.out.println("Enter the family at index " + (i + 1));
             listStreet.add(addMembers());
         }
-        FileCSV.writerCSV(FileCSV.FILE_CSV, listStreet);
+        FileCSV.writerCSV(FileCSV.FILE_OUT, listStreet);
         show();
     }
 
@@ -158,7 +155,7 @@ public class ManagementStreet {
                 }
             }
         }
-        FileCSV.writerCSV(FileCSV.FILE_CSV, listStreet);
+        FileCSV.writerCSV(FileCSV.FILE_OUT, listStreet);
         show();
     }
 
@@ -169,16 +166,16 @@ public class ManagementStreet {
         int id = Integer.parseInt(sc.nextLine());
 
         for (int i = 0; i < listStreet.size(); i++) {
-//            int quantity = listStreet.get(i).getQuantityMember();
+            int quantity = listStreet.get(i).getQuantityMember();
             for (int j = 0; j < listStreet.get(i).getListMembers().size(); j++) {
                 if (id == listStreet.get(i).getListMembers().get(j).getId()) {
                     listStreet.get(i).getListMembers().remove(j);
-//                    quantity--;
+                    quantity--;
                     break;
                 }
             }
         }
-        FileCSV.writerCSV(FileCSV.FILE_CSV, listStreet);
+        FileCSV.writerCSV(FileCSV.FILE_OUT, listStreet);
         show();
     }
 

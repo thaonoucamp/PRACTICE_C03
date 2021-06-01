@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileCSV {
-    static public String FILE_CSV = "/Users/thaodangxuan/IdeaProjects/PRACTICE_C03/src/street/myFile/street.csv";
+
+    static public String FILE_CSV = "/Users/thaodangxuan/IdeaProjects/PRACTICE_C03/src/street/myFile/treet.csv";
+    static public String FILE_OUT = "/Users/thaodangxuan/IdeaProjects/PRACTICE_C03/src/street/myFile/streetOutput.csv";
+    public static ArrayList<Person> arrayList;
 
     public static void writerCSV(String path, List<Family> list) throws IOException {
         FileWriter fw = new FileWriter(new File(path));
@@ -18,7 +21,7 @@ public class FileCSV {
         for (int i = 0; i < list.size(); i++) {
             String homes = "";
             String members = "";
-            homes += list.get(i).getIdHome() + "," + members + "\n";
+            homes += list.get(i).getIdHome() + "," + list.get(i).getQuantityMember() + members + "\n";
             bw.write(homes);
             for (int j = 0; j < list.get(i).getListMembers().size(); j++) {
                 members += list.get(i).getListMembers().get(j).getId()
@@ -37,13 +40,17 @@ public class FileCSV {
         List<Family> list = new ArrayList<>();
         FileReader fileReader = new FileReader(content);
         BufferedReader br = new BufferedReader(fileReader);
-        String item = null;
-        int idHome = 0;
-        int quantity = 0;
-        Member members;
-        while ((item = br.readLine()) != null) {
-            String[] home = item.split(",");
-            list.add(new Family(home[0], home[1], new ArrayList<Person>().add(new Person(home[2], home[3], Integer.parseInt(home[4]), Integer.parseInt(home[5]), home[6]))));
+        String itemHome = null;
+        while ((itemHome = br.readLine()) != null) {
+            ArrayList<Person> members = new ArrayList<>();
+            String[] home = itemHome.split(",");
+            for (int i = 0; i < Integer.parseInt(home[1]); i++) {
+                String[] member = br.readLine().split(",");
+                Person person1 = new Person(Integer.parseInt(member[0]), member[1], Integer.parseInt(member[2]), member[3], member[4]);
+                members.add(person1);
+            }
+            Family family = new Family(Integer.parseInt(home[0]), Integer.parseInt(home[1]), members);
+            list.add(family);
         }
         return list;
     }
