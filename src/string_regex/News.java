@@ -8,24 +8,25 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Crawl {
-    private static final String PATH = "https://www.nhaccuatui.com/bai-hat/nhac-tre-moi.html";
+public class News {
+    private static final String URL_PATH = "https://dantri.com.vn/the-gioi.htm";
+    private static final String REGEX = ">(.*?)</a>";
 
     public static void main(String[] args) throws IOException {
-        // 1- nhan vao url;
-        URL url = new URL(PATH);
-        // 2- mo tream va dua vao input stream;
+        // 1 - tao URL;
+        URL url = new URL(URL_PATH);
+        // 2 - mo stream de doc;
         Scanner sc = new Scanner(new InputStreamReader(url.openStream()));
-        // 3- ghi den ky tu cuoi cung;
+        // 3 - ghi cho den ky tu cuoi cung;
         sc.useDelimiter("\\Z");
         String content = sc.next();
         sc.close();
-        // 4- cat noi dung lay duoc(/n + ',');
-        content = content.replaceAll("\\n+", " ");
-        // 5- loc noi dung;
-        Pattern pattern = Pattern.compile("name_song\">(.*?)</a>");
+        // 4 - cat noi dung (/n + ",");
+//        content = content.replaceAll("\\n+", "");
+        System.out.println(content);
+        Pattern pattern = Pattern.compile(REGEX);
         Matcher matcher = pattern.matcher(content);
-        // 6- in noi dung;
+        // 5- in noi dung;
         while (matcher.find()) {
             System.out.println(matcher.group(1));
         }
