@@ -38,9 +38,12 @@ public class FileCSV {
 
     public static List<Family> reader(String content) throws IOException {
         List<Family> list = new ArrayList<>();
+
         FileReader fileReader = new FileReader(content);
         BufferedReader br = new BufferedReader(fileReader);
-        String itemHome = null;
+
+        String itemHome;
+
         while ((itemHome = br.readLine()) != null) {
             ArrayList<Person> members = new ArrayList<>();
             String[] home = itemHome.split(",");
