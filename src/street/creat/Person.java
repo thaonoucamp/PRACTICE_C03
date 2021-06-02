@@ -1,12 +1,14 @@
 package street.creat;
 
+import street.behaviral.Regex;
+
 import java.io.Serializable;
 
 public class Person implements Serializable {
     private String name;
     private String gender;
     private int id;
-    private int age;
+    private String age;
     private String job;
 
     public String getGender() {
@@ -14,10 +16,20 @@ public class Person implements Serializable {
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        String NAME_REGEX = "^[A-Za_z]+$";
+        boolean check = true;
+        while (check) {
+            if (Regex.validate(NAME_REGEX, name)) {
+                this.gender = gender;
+                check = false;
+            } else {
+                System.err.println("Enter to repeat !");
+                check = true;
+            }
+        }
     }
 
-    public Person(int id, String name, int age, String gender, String job) {
+    public Person(int id, String name, String age, String gender, String job) {
         this.name = name;
         this.gender = gender;
         this.id = id;
@@ -30,7 +42,17 @@ public class Person implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        String NAME_REGEX = "^[A-Za_z]+$";
+        boolean check = true;
+        while (check) {
+            if (Regex.validate(NAME_REGEX, name)) {
+                this.name = name;
+                check = false;
+            } else {
+                System.err.println("Enter to repeat !");
+                check = true;
+            }
+        }
     }
 
     public int getId() {
@@ -41,12 +63,22 @@ public class Person implements Serializable {
         this.id = id;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setAge(String age) {
+        String NAME_REGEX = "^[A-Za_z]+$";
+        boolean check = true;
+        while (check) {
+            if (Regex.validate(NAME_REGEX, age)) {
+                this.age = age;
+                check = false;
+            } else {
+                System.err.println("Enter to repeat !");
+                check = true;
+            }
+        }
     }
 
     public String getJob() {
@@ -54,7 +86,17 @@ public class Person implements Serializable {
     }
 
     public void setJob(String job) {
-        this.job = job;
+        String NAME_REGEX = "^[A-Za_z]+$";
+        boolean check = true;
+        while (check) {
+            if (Regex.validate(NAME_REGEX, job)) {
+                this.job = job;
+                check = false;
+            } else {
+                System.err.println("Enter to repeat !");
+                check = true;
+            }
+        }
     }
 
     public Person() {

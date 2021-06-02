@@ -21,6 +21,9 @@ public class ManagementStreet {
              listStreet = FileCSV.reader(FileCSV.FILE_CSV);
         } catch (Exception e) {
             listStreet = new ArrayList<>();
+        } finally {
+            idFamily = 1;
+            idPerson = 1;
         }
     }
 
@@ -34,7 +37,7 @@ public class ManagementStreet {
         person.setGender(sc.nextLine());
 
         System.out.println("Enter the age");
-        person.setAge(Integer.parseInt(sc.nextLine()));
+        person.setAge(sc.nextLine());
 
         person.setId(idPerson);
         idPerson++;
@@ -187,7 +190,7 @@ public class ManagementStreet {
             @Override
             public int compare(Person o1, Person o2) {
                 if (o1.getName().equals(o2.getName())) {
-                    return o1.getAge() - o2.getAge();
+                    return o1.getAge().compareTo(o2.getAge());
                 }
                 return o1.getName().compareTo(o2.getName());
             }

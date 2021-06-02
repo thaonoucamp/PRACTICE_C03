@@ -49,7 +49,7 @@ public class FileCSV {
             String[] home = itemHome.split(",");
             for (int i = 0; i < Integer.parseInt(home[1]); i++) {
                 String[] member = br.readLine().split(",");
-                Person person1 = new Person(Integer.parseInt(member[0]), member[1], Integer.parseInt(member[2]), member[3], member[4]);
+                Person person1 = new Person(Integer.parseInt(member[0]), member[1], member[2], member[3], member[4]);
                 members.add(person1);
             }
             Family family = new Family(Integer.parseInt(home[0]), Integer.parseInt(home[1]), members);
