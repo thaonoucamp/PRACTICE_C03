@@ -27,14 +27,14 @@ public class Management implements IManagement<Student> {
         Student newStudent = new Student();
 
         while (true) {
-            System.out.println("Enter the id");
-            String REGEX_ID = "^[0-9]+$";
+            System.out.println("Enter the id with format [C0000(H|K|I)0]");
+            String REGEX_ID = "^[C]{1}[0-9]{4}[H-I-K]{1}[0-9]{1}$";
             String id = sc.nextLine();
-            if (Regex.validate(REGEX_ID, id)) {
+            if (Regex.validate(REGEX_ID, id) && checkIdOnly(studentList, id)) {
                 newStudent.setId(id);
                 break;
             } else {
-                System.err.println("Enter to repeat !");
+                System.err.println("The id has duplicated !");
             }
         }
 
@@ -51,7 +51,7 @@ public class Management implements IManagement<Student> {
         }
 
         while (true) {
-            System.out.println("Enter the birthday");
+            System.out.println("Enter the birthday with format [00-00-0000]");
             String REGEX_BORN = "^[0-9]{2}[-|/]+[0-9]{2}[-|/]+[0-9]{4}$";
             String born = sc.nextLine();
             if (Regex.validate(REGEX_BORN, born)) {
@@ -63,7 +63,7 @@ public class Management implements IManagement<Student> {
         }
 
         while (true) {
-            System.out.println("Enter the gender");
+            System.out.println("Enter the gender with format [0 | 1]");
             String REGEX_GEN = "^[0|1]+$";
             String gen = sc.nextLine();
             if (Regex.validate(REGEX_GEN, gen)) {
@@ -87,7 +87,7 @@ public class Management implements IManagement<Student> {
         }
 
         while (true) {
-            System.out.println("Enter the email");
+            System.out.println("Enter the email with format [abc@abc.abc]");
             String REGEX_EMAIL = "^[a-z0-9]+@[a-z0-9]+[.]{1}[a-z]+$";
             String mail = sc.nextLine();
             if (Regex.validate(REGEX_EMAIL, mail)) {
@@ -113,17 +113,15 @@ public class Management implements IManagement<Student> {
         return newStudent;
     }
 
-    private void checkInput(String REGEX, String content) {
-        while (true) {
-            if (Regex.validate(REGEX, content)) {
-
-                break;
-            } else {
-                System.err.println("Enter to repeat !");
+    public boolean checkIdOnly(List<Student> list, String id) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(id)) {
+                return true;
             }
+            return false;
         }
+        return false;
     }
-
 
     @Override
     public void add(List<Student> list) throws IOException {
@@ -137,14 +135,32 @@ public class Management implements IManagement<Student> {
         FileCSV.writer(FileCSV.FILE_PATH, list);
     }
 
+    public int getIndexStudent(List<Student> list){
+        int index = 0;
+        System.out.println("Enter the id");
+        String id = sc.nextLine();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(id)){
+                index = i;
+                return index;
+            }
+        }
+        return -1;
+    }
     @Override
-    public void edit(List<Student> list) {
+    public void edit(List<Student> list) throws IOException {
+        FileCSV.reader(FileCSV.FILE_PATH);
 
+        show(list);
+        FileCSV.writer(FileCSV.FILE_PATH, list);
     }
 
     @Override
-    public void delete(List<Student> list) {
+    public void delete(List<Student> list) throws IOException {
+        FileCSV.reader(FileCSV.FILE_PATH);
 
+        show(list);
+        FileCSV.writer(FileCSV.FILE_PATH, list);
     }
 
     @Override
@@ -153,13 +169,10 @@ public class Management implements IManagement<Student> {
     }
 
     @Override
-    public void sort(List<Student> list) {
-        list.sort(new Comparator<Student>() {
-            @Override
-            public int compare(Student o1, Student o2) {
-                return 0;
-            }
-        });
+    public void sort(List<Student> list) throws IOException {
+        FileCSV.reader(FileCSV.FILE_PATH);
+
+        FileCSV.writer(FileCSV.FILE_PATH, list);
     }
 
     @Override
@@ -168,29 +181,30 @@ public class Management implements IManagement<Student> {
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
-        sort(list);
     }
 
     @Override
     public void menu() throws IOException {
         int choice;
-        System.out.println(
-                "***Menu***" +
-                "\n1 -> add;" +
-                " 2 -> edit;" +
-                " 3 -> delete;" +
-                " 4 -> find;" +
-                " 5 -> sort;" +
-                " 6 -> exit;" +
-                "\nyour choice ???");
-        choice = Integer.parseInt(sc.nextLine());
-        switch (choice) {
-            case 1 -> add(studentList);
-            case 2 -> edit(studentList);
-            case 3 -> delete(studentList);
-            case 4 -> find(studentList);
-            case 5 -> sort(studentList);
-            case 6 -> System.exit(6);
-        }
+        do {
+            System.out.println(
+                    "***Menu***" +
+                            "\n1 -> add;" +
+                            " 2 -> edit;" +
+                            " 3 -> delete;" +
+                            " 4 -> find;" +
+                            " 5 -> sort;" +
+                            " 6 -> exit;" +
+                            "\nyour choice ???");
+            choice = Integer.parseInt(sc.nextLine());
+            switch (choice) {
+                case 1 -> add(studentList);
+                case 2 -> edit(studentList);
+                case 3 -> delete(studentList);
+                case 4 -> find(studentList);
+                case 5 -> sort(studentList);
+                case 6 -> System.exit(6);
+            }
+        } while (choice != 0);
     }
 }

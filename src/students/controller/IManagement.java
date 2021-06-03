@@ -8,13 +8,13 @@ public interface IManagement<T> {
 
     void add(List<T> list) throws IOException;
 
-    void edit(List<T> list);
+    void edit(List<T> list) throws IOException;
 
-    void delete(List<T> list);
+    void delete(List<T> list) throws IOException;
 
     void find(List<T> list);
 
-    void sort(List<T> list);
+    void sort(List<T> list) throws IOException;
 
     void show(List<T> list);
 
