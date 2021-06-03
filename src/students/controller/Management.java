@@ -8,6 +8,7 @@ import java.util.*;
 public class Management implements IManagement<Student> {
     private List<Student> studentList;
     private Scanner sc = new Scanner(System.in);
+    private final int YEAR_CURRENT = 2021;
 
     public List<Student> getStudentList() {
         return studentList;
@@ -27,14 +28,14 @@ public class Management implements IManagement<Student> {
 
         while (true) {
             System.out.println("Enter the id with format [C1234(H|K|I)5]");
-            String REGEX_ID = "^[C]{1}[0-9]{4}[H-I-K]{1}[0-9]{1}$";
+            String REGEX_ID = "^[C|c]{1}[0-9]{4}[H-I-K|h-i-k]{1}[0-9]{1}$";
             String id = sc.nextLine();
-            if (Regex.validate(REGEX_ID, id) && checkIdOnly(studentList, id)) {
+            boolean isOnly = checkIdOnly(studentList, id);
+            if (Regex.validate(REGEX_ID, id) && isOnly) {
                 newStudent.setId(id);
                 break;
-            } else {
-                System.err.println("The id has duplicated !");
             }
+            System.err.println("The id has duplicated !");
         }
 
         while (true) {
@@ -44,9 +45,8 @@ public class Management implements IManagement<Student> {
             if (Regex.validate(REGEX_NAME, name)) {
                 newStudent.setName(name);
                 break;
-            } else {
-                System.err.println("Enter to repeat !");
             }
+            System.err.println("Enter to repeat !");
         }
 
         while (true) {
@@ -54,15 +54,15 @@ public class Management implements IManagement<Student> {
             String REGEX_BORN = "^[0-9]{2}[-|/]+[0-9]{2}[-|/]+[0-9]{4}$";
             String born = sc.nextLine();
 
-            String[] birthDay = born.split(",");
-            String age = birthDay[birthDay.length - 1];
+            String[] birthDay = born.split("-|/");
+            String temp = birthDay[birthDay.length - 1];
+            int age = YEAR_CURRENT - Integer.parseInt(temp);
 
             if (Regex.validate(REGEX_BORN, born)) {
-                newStudent.setBirthday(age);
+                newStudent.setBirthday(String.valueOf(age));
                 break;
-            } else {
-                System.err.println("Enter to repeat !");
             }
+            System.err.println("Enter to repeat !");
         }
 
         while (true) {
@@ -72,9 +72,8 @@ public class Management implements IManagement<Student> {
             if (Regex.validate(REGEX_GEN, gen)) {
                 newStudent.setGender(gen);
                 break;
-            } else {
-                System.err.println("Enter to repeat !");
             }
+            System.err.println("Enter to repeat !");
         }
 
         while (true) {
@@ -84,9 +83,8 @@ public class Management implements IManagement<Student> {
             if (Regex.validate(REGEX_ADDRESS, add)) {
                 newStudent.setAddress(add);
                 break;
-            } else {
-                System.err.println("Enter to repeat !");
             }
+            System.err.println("Enter to repeat !");
         }
 
         while (true) {
@@ -96,9 +94,8 @@ public class Management implements IManagement<Student> {
             if (Regex.validate(REGEX_EMAIL, mail)) {
                 newStudent.setEmail(mail);
                 break;
-            } else {
-                System.err.println("Enter to repeat !");
             }
+            System.err.println("Enter to repeat !");
         }
 
         while (true) {
@@ -108,19 +105,19 @@ public class Management implements IManagement<Student> {
             if (Regex.validate(REGEX_MARK, mark)) {
                 newStudent.setMark(mark);
                 break;
-            } else {
-                System.err.println("Enter to repeat !");
             }
+            System.err.println("Enter to repeat !");
         }
 
         return newStudent;
     }
 
     public boolean checkIdOnly(List<Student> list, String id) {
+        if (list.size() == 0) {
+            return true;
+        }
         for (int i = 0; i < list.size(); i++) {
-            if (list.size() == 0) {
-                return true;
-            } else if (!list.get(i).getId().equalsIgnoreCase(id)) {
+            if (!list.get(i).getId().equalsIgnoreCase(id)) {
                 return true;
             }
             return false;
@@ -171,7 +168,7 @@ public class Management implements IManagement<Student> {
         int index = getIndexStudent(list);
         int choice;
         for (int i = 0; i < list.size(); i++) {
-            System.out.println("are you really want to delete ? " + list.get(index).getName() +
+            System.out.println("Are you really want to delete " + list.get(index).getName() + " ???" +
                     "\n1. YES" +
                     "\n2. NO");
             choice = Integer.parseInt(sc.nextLine());
