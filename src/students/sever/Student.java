@@ -86,7 +86,7 @@ public class Student {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", birthday='" + birthday + '\'' +
-                ", gender='" + gender + '\'' +
+                ", gender='" + (gender == "0" ? "boy" : "girl") + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", mark='" + mark + '\'' +
