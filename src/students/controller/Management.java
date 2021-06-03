@@ -1,6 +1,5 @@
 package students.controller;
 
-import students.sever.Regex;
 import students.sever.Student;
 
 import java.io.IOException;
@@ -27,7 +26,7 @@ public class Management implements IManagement<Student> {
         Student newStudent = new Student();
 
         while (true) {
-            System.out.println("Enter the id with format [C0000(H|K|I)0]");
+            System.out.println("Enter the id with format [C1234(H|K|I)5]");
             String REGEX_ID = "^[C]{1}[0-9]{4}[H-I-K]{1}[0-9]{1}$";
             String id = sc.nextLine();
             if (Regex.validate(REGEX_ID, id) && checkIdOnly(studentList, id)) {
@@ -51,11 +50,15 @@ public class Management implements IManagement<Student> {
         }
 
         while (true) {
-            System.out.println("Enter the birthday with format [00-00-0000]");
+            System.out.println("Enter the birthday with format [DD-MM-YYYY]");
             String REGEX_BORN = "^[0-9]{2}[-|/]+[0-9]{2}[-|/]+[0-9]{4}$";
             String born = sc.nextLine();
+
+            String[] birthDay = born.split(",");
+            String age = birthDay[birthDay.length - 1];
+
             if (Regex.validate(REGEX_BORN, born)) {
-                newStudent.setBirthday(born);
+                newStudent.setBirthday(age);
                 break;
             } else {
                 System.err.println("Enter to repeat !");
@@ -115,7 +118,9 @@ public class Management implements IManagement<Student> {
 
     public boolean checkIdOnly(List<Student> list, String id) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId().equals(id)) {
+            if (list.size() == 0) {
+                return true;
+            } else if (!list.get(i).getId().equalsIgnoreCase(id)) {
                 return true;
             }
             return false;
@@ -135,22 +140,27 @@ public class Management implements IManagement<Student> {
         FileCSV.writer(FileCSV.FILE_PATH, list);
     }
 
-    public int getIndexStudent(List<Student> list){
+    public int getIndexStudent(List<Student> list) {
         int index = 0;
         System.out.println("Enter the id");
         String id = sc.nextLine();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId().equals(id)){
+            if (list.get(i).getId().equalsIgnoreCase(id)) {
                 index = i;
                 return index;
             }
         }
         return -1;
     }
+
     @Override
     public void edit(List<Student> list) throws IOException {
         FileCSV.reader(FileCSV.FILE_PATH);
-
+        int index = getIndexStudent(list);
+        for (int i = 0; i < list.size(); i++) {
+            list.set(index, input());
+            break;
+        }
         show(list);
         FileCSV.writer(FileCSV.FILE_PATH, list);
     }
@@ -158,20 +168,47 @@ public class Management implements IManagement<Student> {
     @Override
     public void delete(List<Student> list) throws IOException {
         FileCSV.reader(FileCSV.FILE_PATH);
-
+        int index = getIndexStudent(list);
+        int choice;
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println("are you really want to delete ? " + list.get(index).getName() +
+                    "\n1. YES" +
+                    "\n2. NO");
+            choice = Integer.parseInt(sc.nextLine());
+            if (choice == 1) {
+                list.remove(index);
+                break;
+            } else {
+                break;
+            }
+        }
         show(list);
         FileCSV.writer(FileCSV.FILE_PATH, list);
     }
 
     @Override
     public void find(List<Student> list) {
-
+        int index = getIndexStudent(list);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(index));
+            break;
+        }
     }
 
     @Override
     public void sort(List<Student> list) throws IOException {
         FileCSV.reader(FileCSV.FILE_PATH);
-
+        Collections.sort(list, new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                if (o1.getName().equals(o2.getName())) {
+                    return o1.getBirthday().compareTo(o2.getBirthday());
+                } else if (o1.getBirthday().equals(o2.getBirthday())) {
+                    return o1.getMark().compareTo(o2.getMark());
+                }
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
         FileCSV.writer(FileCSV.FILE_PATH, list);
     }
 
@@ -189,13 +226,13 @@ public class Management implements IManagement<Student> {
         do {
             System.out.println(
                     "***Menu***" +
-                            "\n1 -> add;" +
-                            " 2 -> edit;" +
-                            " 3 -> delete;" +
-                            " 4 -> find;" +
-                            " 5 -> sort;" +
-                            " 6 -> exit;" +
-                            "\nyour choice ???");
+                            "\n[[1 -> add]" +
+                            " [2 -> edit]" +
+                            " [3 -> delete]" +
+                            " [4 -> find]" +
+                            " [5 -> sort]" +
+                            " [6 -> exit]]" +
+                            "\nEnter your choice ?");
             choice = Integer.parseInt(sc.nextLine());
             switch (choice) {
                 case 1 -> add(studentList);
