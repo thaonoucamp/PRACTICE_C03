@@ -35,6 +35,8 @@ public class DemoStrategy {
         list.add(0);
         list.add(1);
         strategy.setStrategy(new MergeSort());
+//        strategy.sorted(list);
+        strategy.setStrategy(new QuickSort());
         strategy.sorted(list);
     }
 }
